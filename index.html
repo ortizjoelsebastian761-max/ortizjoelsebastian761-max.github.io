@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OVA · Teoría de Colas</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav id="nav"></nav>
+<main>
+
+<section id="inicio" class="on">
+ <div class="cover">
+  <img src="assets/logo.png" alt="Universidad Simón Bolívar">
+  <h1>Teoría de Colas</h1>
+  <p>Objeto Virtual de Aprendizaje (OVA): ¿por qué esperamos en las filas y cómo se puede mejorar?</p>
+  <div class="by">Hecho por Joel Ortiz</div>
+  <p><button class="btn" onclick="go('intro')">Comenzar →</button></p>
+ </div>
+ <div class="card"><h3>¿Qué vas a encontrar?</h3>
+  <p>Teoría explicada paso a paso, una calculadora del modelo M/M/1, un video y dos juegos para practicar: un simulador de cajas y un quiz.</p></div>
+</section>
+
+<section id="intro">
+ <h2>1. Introducción</h2>
+ <div class="card"><p>La <b>teoría de colas</b> es una rama de la investigación de operaciones que estudia matemáticamente las <b>líneas de espera</b>: cuánto tiempo esperan los clientes, cuánta gente hay en la fila y qué tan ocupados están los servidores.</p>
+ <p>Nació en 1909 con el ingeniero danés <b>Agner Krarup Erlang</b>, quien analizó las llamadas en una central telefónica de Copenhague.</p></div>
+ <div class="card"><h3>¿Dónde la vemos?</h3>
+ <div class="grid">
+  <div>🏦 Bancos y cajeros</div><div>🏥 Urgencias de hospitales</div><div>🛒 Supermercados</div>
+  <div>🌐 Servidores y redes</div><div>✈️ Aeropuertos</div><div>🍔 Restaurantes de comida rápida</div>
+ </div></div>
+ <div class="card"><h3>¿Por qué importa?</h3>
+ <p>Poca capacidad genera clientes molestos y pérdidas. Demasiada capacidad genera costos innecesarios. La teoría de colas ayuda a encontrar el <b>equilibrio</b>.</p></div>
+</section>
+
+<section id="conceptos">
+ <h2>2. Conceptos clave</h2>
+ <div class="card"><h3>Elementos de un sistema de colas</h3>
+ <ul><li><b>Fuente de clientes:</b> población que genera las llegadas (finita o infinita).</li>
+ <li><b>Llegadas (λ):</b> número promedio de clientes que llegan por unidad de tiempo.</li>
+ <li><b>Cola:</b> espacio donde se espera; puede tener capacidad limitada.</li>
+ <li><b>Servidores (s):</b> quienes atienden: cajeros, médicos, procesadores.</li>
+ <li><b>Servicio (μ):</b> número promedio de clientes que un servidor atiende por unidad de tiempo.</li></ul></div>
+ <div class="card"><h3>Disciplinas de la cola</h3>
+ <div class="wrap"><table><tr><th>Sigla</th><th>Nombre</th><th>Significado</th></tr>
+ <tr><td>FIFO</td><td>Primero en llegar, primero en salir</td><td>La fila normal de un banco</td></tr>
+ <tr><td>LIFO</td><td>Último en llegar, primero en salir</td><td>Una pila de platos</td></tr>
+ <tr><td>SIRO</td><td>Orden aleatorio</td><td>Sorteo de atención</td></tr>
+ <tr><td>PRI</td><td>Por prioridad</td><td>Urgencias médicas</td></tr></table></div></div>
+ <div class="card"><h3>Notación de Kendall: A / B / s</h3>
+ <p><b>A</b> = distribución de llegadas, <b>B</b> = distribución del servicio, <b>s</b> = número de servidores.</p>
+ <p><span class="f">M</span> significa distribución exponencial (Markoviana), <span class="f">D</span> determinística y <span class="f">G</span> general.</p>
+ <p>Ejemplo: <span class="f">M/M/1</span> = llegadas de Poisson, servicio exponencial y un solo servidor.</p></div>
+</section>
+
+<section id="modelo">
+ <h2>3. Modelo M/M/1</h2>
+ <div class="card"><p>Es el modelo más sencillo. Solo funciona si el sistema es estable: <span class="f">λ &lt; μ</span>.</p>
+ <div class="wrap"><table><tr><th>Medida</th><th>Fórmula</th></tr>
+ <tr><td>Utilización</td><td class="f">ρ = λ / μ</td></tr>
+ <tr><td>Prob. sistema vacío</td><td class="f">P0 = 1 − ρ</td></tr>
+ <tr><td>Clientes en el sistema</td><td class="f">L = ρ / (1 − ρ)</td></tr>
+ <tr><td>Clientes en la cola</td><td class="f">Lq = ρ² / (1 − ρ)</td></tr>
+ <tr><td>Tiempo en el sistema</td><td class="f">W = 1 / (μ − λ)</td></tr>
+ <tr><td>Tiempo en la cola</td><td class="f">Wq = ρ / (μ − λ)</td></tr></table></div>
+ <p>Además se cumple la <b>Ley de Little</b>: <span class="f">L = λ·W</span>.</p></div>
+ <div class="card"><h3>🧮 Calculadora</h3>
+ <div class="grid"><label>λ (llegadas por hora)<input id="lam" type="number" value="8" min="0" step="any"></label>
+ <label>μ (atendidos por hora)<input id="mu" type="number" value="10" min="0" step="any"></label></div>
+ <p><button class="btn" onclick="calc()">Calcular</button></p><div id="res"></div></div>
+</section>
+
+<section id="video">
+ <h2>4. Video</h2>
+ <div class="card"><div class="video" id="vbox"></div>
+ <p id="vlink"></p></div>
+ <div class="card"><h3>🔗 Más videos (enlaces)</h3>
+ <ul><li><a href="https://youtu.be/O4FVPd8oO1Y?si=h4M768pJAgF0USD2" target="_blank" rel="noopener">Video 1: teoría de colas en YouTube</a></li>
+ <li><a href="https://youtu.be/axCWOyNPuNE?si=qX_ie6Y2p2x5dx9Y" target="_blank" rel="noopener">Video 2: teoría de colas en YouTube</a></li></ul></div>
+</section>
+
+<section id="juego1">
+ <h2>5. Juego 1: Cajero express 🏦</h2>
+ <div class="card"><h3>📖 Cómo jugar</h3>
+ <ol>
+ <li>Elige la <b>dificultad</b> y el número de <b>cajas</b> (servidores) y pulsa <b>Iniciar juego</b>. Tienes 45 segundos.</li>
+ <li>Los clientes llegan solos a la fila (esa es la tasa λ). Cada uno tiene una <b>barra de paciencia</b> que baja y se pone roja cuando está por irse.</li>
+ <li>Pulsa <b>Llamar</b> en una caja libre para atender al primero de la fila (disciplina <b>FIFO</b>).</li>
+ <li>O <b>toca directamente a un cliente</b> de la fila para atenderlo de inmediato en la primera caja libre (disciplina por <b>prioridad</b>). Úsalo para salvar a los que están por irse.</li>
+ <li>Tipos de cliente: 🧑 normal (+10 si lo atiendes, −5 si se va), 😠 impaciente (+15 / −8, se desespera rápido) y 👑 VIP (+25 / −15).</li>
+ <li>Botón <b>➕ Caja extra</b>: abre una caja más por 12 segundos, una sola vez, y cuesta 20 puntos. ¿Vale la pena? Esa es la pregunta central de la teoría de colas.</li>
+ <li>Al final verás tus estadísticas: λ observada, μ observada, espera promedio y clientes perdidos.</li>
+ </ol></div>
+ <div class="card">
+ <div class="grid"><label>Dificultad<select id="gd"><option value="f">Fácil</option><option value="m" selected>Media</option><option value="d">Difícil</option></select></label>
+ <label>Cajas iniciales<select id="gn"><option>1</option><option selected>2</option><option>3</option></select></label></div>
+ <p><button class="btn" onclick="start()">▶ Iniciar juego</button> <button class="btn alt" onclick="pause()">⏯ Pausa</button> <button class="btn alt" id="gx" onclick="extra()">➕ Caja extra (−20)</button></p>
+ <div class="stat"><span>⏱ <span id="gt">45</span>s</span><span>⭐ <span id="gs">0</span></span><span>😡 Perdidos: <span id="gl">0</span></span><span>👥 En fila: <span id="gf">0</span></span></div>
+ <h4>Fila de espera (toca a un cliente para atenderlo ya)</h4><div class="stage" id="gq"></div>
+ <div class="cajas" id="gc"></div>
+ <div id="gend"></div></div>
+</section>
+
+<section id="juego2">
+ <h2>6. Juego 2: Quiz 🧠</h2>
+ <div class="card" id="quiz"></div>
+</section>
+
+<section id="refs">
+ <div class="cred card">
+ <h2>Créditos</h2>
+ <p><b>Autor:</b> Joel Sebastián Ortiz Marcado<br>
+ <b>Tema:</b> Teoría de colas<br>
+ <b>Asignatura:</b> Teoría General de Sistemas · Ingeniería de Sistemas · 2026-2<br>
+ <b>Institución:</b> Universidad Simón Bolívar · Campus Cúcuta</p>
+ <h3>Herramientas de IA declaradas</h3>
+ <p>Claude (Anthropic): apoyo en la generación y revisión del código HTML, CSS y JavaScript y en la redacción de actividades. El autor revisó y adaptó el contenido.</p>
+ <h3>Videos</h3>
+ <p>Videos de YouTube (uno incrustado y otro como enlace); los derechos pertenecen a sus autores.</p>
+ <p><a href="https://youtu.be/O4FVPd8oO1Y?si=h4M768pJAgF0USD2" target="_blank" rel="noopener">Video 1</a> · <a href="https://youtu.be/axCWOyNPuNE?si=qX_ie6Y2p2x5dx9Y" target="_blank" rel="noopener">Video 2</a></p>
+ <h3>Referencias</h3>
+ <p class="ref">Erlang, A. K. (1909). The theory of probabilities and telephone conversations. <i>Nyt Tidsskrift for Matematik B, 20</i>, 33–39.</p>
+ <p class="ref">Hillier, F. S., &amp; Lieberman, G. J. <i>Introducción a la investigación de operaciones</i>. McGraw-Hill.</p>
+ <p class="ref">Kendall, D. G. (1953). Stochastic processes occurring in the theory of queues and their analysis by the method of the imbedded Markov chain. <i>The Annals of Mathematical Statistics, 24</i>(3), 338–354.</p>
+ <p class="ref">Little, J. D. C. (1961). A proof for the queuing formula: L = λW. <i>Operations Research, 9</i>(3), 383–387.</p>
+ <p class="ref">Taha, H. A. <i>Investigación de operaciones</i>. Pearson Educación.</p>
+ </div>
+</section>
+
+<footer>OVA de Teoría de Colas · Hecho por Joel Ortiz · Universidad Simón Bolívar</footer>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
